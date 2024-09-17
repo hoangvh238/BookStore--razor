@@ -1,0 +1,50 @@
+﻿@page
+@model EditModel
+
+@{
+    ViewData["Title"] = "Edit Customer";
+}
+
+<h1>Edit Customer</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Customer.CustomerId" />
+
+            <div class="form-group">
+                <label asp-for="Customer.Password" class="control-label">Password</label>
+                <input asp-for="Customer.Password" class="form-control" />
+                <span asp-validation-for="Customer.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Customer.ContactName" class="control-label">Contact Name</label>
+                <input asp-for="Customer.ContactName" class="form-control" />
+                <span asp-validation-for="Customer.ContactName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Customer.Adress" class="control-label">Address</label>
+                <input asp-for="Customer.Adress" class="form-control" />
+                <span asp-validation-for="Customer.Adress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Customer.Phone" class="control-label">Phone</label>
+                <input asp-for="Customer.Phone" class="form-control" />
+                <span asp-validation-for="Customer.Phone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,22 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="card-title">Access Denied</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">You are not authorized to access this page.</p>
+                    <p class="card-text">Please contact your administrator for assistance.</p>
+                    <a asp-page="/Index" class="btn btn-primary">Go to Homepage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

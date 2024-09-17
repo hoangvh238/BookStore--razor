@@ -1,0 +1,67 @@
+﻿@page
+@model BookStore.Pages.Products.CreateModel
+
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<h1>Create Product</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="Product.ProductId" class="control-label">Product ID</label>
+                <input asp-for="Product.ProductId" class="form-control" />
+                <span asp-validation-for="Product.ProductId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.ProductName" class="control-label">Product Name</label>
+                <input asp-for="Product.ProductName" class="form-control" />
+                <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.SupplierId" class="control-label">Supplier</label>
+                <select asp-for="Product.SupplierId" class="form-control" asp-items="@Model.Suppliers"></select>
+                <span asp-validation-for="Product.SupplierId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.CategoryId" class="control-label">Category</label>
+                <select asp-for="Product.CategoryId" class="form-control" asp-items="@Model.Categories"></select>
+                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.QuantityPerUnit" class="control-label">Quantity Per Unit</label>
+                <input asp-for="Product.QuantityPerUnit" class="form-control" />
+                <span asp-validation-for="Product.QuantityPerUnit" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.UnitPrice" class="control-label">Unit Price</label>
+                <input asp-for="Product.UnitPrice" class="form-control" />
+                <span asp-validation-for="Product.UnitPrice" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Product.ProductImage" class="control-label">Product Image URL</label>
+                <input asp-for="Product.ProductImage" class="form-control" />
+                <span asp-validation-for="Product.ProductImage" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create</button>
+                <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

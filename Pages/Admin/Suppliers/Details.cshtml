@@ -1,0 +1,32 @@
+﻿@page
+@model BookStore.Pages.Suppliers.DetailsModel
+
+@{
+    ViewData["Title"] = "Supplier Details";
+}
+
+<h1>Supplier Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Supplier Information</h4>
+        
+        <hr />
+        
+        <dl class="row">
+            <dt class="col-sm-3">Company Name:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Supplier.CompanyName)</dd>
+            
+            <dt class="col-sm-3">Address:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Supplier.Address)</dd>
+            
+            <dt class="col-sm-3">Phone:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Supplier.Phone)</dd>
+        </dl>
+        
+        <div class="mt-4">
+            <a asp-page="./Edit" asp-route-id="@Model.Supplier.SupplierId" class="btn btn-primary mr-2">Edit</a>
+            <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

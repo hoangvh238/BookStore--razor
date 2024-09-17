@@ -1,0 +1,163 @@
+﻿@page
+@model BookStore.Pages.Customer.Checkout.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            padding-top: 20px;
+        }
+        .cart-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .cart-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .cart-total {
+            font-size: 18px;
+            color: #888;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .cart-item-details {
+            flex: 1;
+            padding-left: 10px;
+        }
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+        }
+        .cart-item-img {
+            width: 80px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .cart-item-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .cart-item-price {
+            font-size: 16px;
+            color: #888;
+        }
+        .cart-item-quantity {
+            font-size: 16px;
+            color: #333;
+            margin-right: 10px;
+        }
+        .cart-item-remove {
+            font-size: 16px;
+            color: #dc3545;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .btn-checkout {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-checkout:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cart-container">
+            <div class="cart-header">
+                <div class="cart-title">Shopping Cart</div>
+                <div class="cart-total">Total: $@Model.CartItems.Sum(item => item.UnitPrice * item.Quantity)</div>
+            </div>
+            
+            @if (Model.CartItems.Count == 0)
+            {
+                <p class="text-center">Your cart is empty.</p>
+            }
+            else
+            {
+                @foreach (var item in Model.CartItems)
+                {
+                    <div class="cart-item">
+                        <img src="@item.Product" alt="@item.Product.ProductName" class="cart-item-img">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">@item.Product.ProductName</div>
+                            <div class="cart-item-price">$@item.UnitPrice</div>
+                            <div class="cart-item-actions">
+                                <div class="cart-item-quantity">Quantity: @item.Quantity</div>
+                                <div class="cart-item-remove" data-product-id="@item.ProductId" onclick="removeFromCart('@item.ProductId')">
+                                    <i class="fas fa-trash-alt"></i> Remove
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                
+                <div class="text-right">
+                    <button class="btn btn-checkout" onclick="proceedToCheckout()">Proceed to Checkout</button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Bootstrap and jQuery Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for Cart Actions -->
+    <script>
+        function removeFromCart(productId) {
+            fetch(`/Cart?handler=RemoveFromCart&productId=${productId}`, {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val(),
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.location.reload(); // Refresh the page after removal
+            })
+            .catch(error => {
+                console.error('Error removing item from cart:', error);
+            });
+        }
+
+        function proceedToCheckout() {
+            alert('Proceeding to checkout...');
+            // Implement your checkout logic here, e.g., redirect to a checkout page
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿@page
+@model BookStore.Pages.Categories.DetailsModel
+
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<h1>Category Details</h1>
+
+<div>
+    <h4>Category Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            <strong>Category Name:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+        <dt class="col-sm-3">
+            <strong>Description:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Category.Description)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Category?.CategoryId" class="btn btn-primary">Edit</a>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</div>

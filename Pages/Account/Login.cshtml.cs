@@ -42,11 +42,17 @@ public class LoginModel : PageModel
             {
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
-
-
                 if (result.Succeeded)
                 {
-                    return RedirectToPage("/Index");
+					var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+					if (await _signInManager.UserManager.IsInRoleAsync(user, "staff"))
+					{
+						 return Redirect("/Admin/Products");
+					}
+					else
+					{
+						return RedirectToPage("/Index"); // Redirect to access denied page or handle as needed
+					}
                 }
                 if (result.IsLockedOut)
                 {

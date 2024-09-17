@@ -1,0 +1,61 @@
+﻿@page
+@model BookStore.Pages.Products.DetailsModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h1>Product Details</h1>
+
+<div>
+    <h4>Product Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            <label class="control-label">Product Name</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.ProductName)
+        </dd>
+        
+        <dt class="col-sm-2">
+            <label class="control-label">Quantity Per Unit</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.QuantityPerUnit)
+        </dd>
+        
+        <dt class="col-sm-2">
+            <label class="control-label">Unit Price</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.UnitPrice)
+        </dd>
+        
+        <dt class="col-sm-2">
+            <label class="control-label">Product Image</label>
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.Product.ProductImage" alt="Product Image" class="img-thumbnail" style="max-width: 200px;" />
+        </dd>
+        
+        <dt class="col-sm-2">
+            <label class="control-label">Category</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Category.CategoryName)
+        </dd>
+        
+        <dt class="col-sm-2">
+            <label class="control-label">Supplier</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Supplier.CompanyName)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Product.ProductId" class="btn btn-primary">Edit</a>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</div>

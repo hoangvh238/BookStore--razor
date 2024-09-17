@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BookStore.Models;
 
-public partial class Customer
+public class Customer
 {
     public Guid CustomerId { get; set; }
 

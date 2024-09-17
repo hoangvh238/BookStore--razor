@@ -42,7 +42,8 @@ public class RegisterModel : PageModel
             {
                 UserName = Input.Email,
                 Email = Input.Email,
-                Role = "Customer"
+                Role = "Customer",
+                EmailConfirmed = true
             };
 
             var result = await _userManager.CreateAsync(user, Input.Password);

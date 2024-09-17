@@ -1,0 +1,50 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Customer";
+}
+
+<h1>Delete Customer</h1>
+
+<h3>Are you sure you want to delete this customer?</h3>
+
+<div>
+    <h4>Customer Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            <strong>Password:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Customer.Password)
+        </dd>
+        <dt class="col-sm-3">
+            <strong>Contact Name:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Customer.ContactName)
+        </dd>
+        <dt class="col-sm-3">
+            <strong>Address:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Customer.Adress)
+        </dd>
+        <dt class="col-sm-3">
+            <strong>Phone:</strong>
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Customer.Phone)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Customer.CustomerId" />
+        
+        <p>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+        </p>
+    </form>
+</div>

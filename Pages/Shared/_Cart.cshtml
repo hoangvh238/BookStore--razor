@@ -1,0 +1,92 @@
+﻿@model List<BookStore.Models.OrderDetail>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="cart-dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="cartDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Cart <span id="cartItemCount">@Model.Sum(item => item.Quantity)</span>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="cartDropdown">
+        <div id="cartItems">
+            @if (Model.Count == 0)
+            {
+                <p class="dropdown-item">Your cart is empty.</p>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <div class="cart-item">
+                        <span>@item.ProductId - $@item.UnitPrice</span>
+                        <div class="quantity-controls">
+                            <button class="btn btn-sm btn-outline-secondary reduce-quantity" data-product-id="@item.ProductId">-</button>
+                            <span class="item-quantity">@item.Quantity</span>
+                            <button class="btn btn-sm btn-outline-secondary add-quantity" data-product-id="@item.ProductId">+</button>
+                            <button class="btn btn-sm btn-outline-danger remove-from-cart" data-product-id="@item.ProductId">Remove</button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-center" href="/Checkout">Go to Checkout</a> <!-- Changed from /Cart to /Checkout -->
+    </div>
+</div>
+
+<input type="hidden" id="requestVerificationToken" value="@ViewData["__RequestVerificationToken"]" />
+
+<script>
+    document.querySelectorAll('.reduce-quantity').forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = button.getAttribute('data-product-id');
+            updateCartItemQuantity(productId, -1);
+        });
+    });
+
+    document.querySelectorAll('.add-quantity').forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = button.getAttribute('data-product-id');
+            updateCartItemQuantity(productId, 1);
+        });
+    });
+
+    document.querySelectorAll('.remove-from-cart').forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = button.getAttribute('data-product-id');
+            removeFromCart(productId);
+        });
+    });
+
+    function updateCartItemQuantity(productId, changeAmount) {
+        var requestVerificationToken = document.getElementById('requestVerificationToken').value;
+
+        fetch(`/Checkout?handler=AddToCart&productId=${productId}`, {
+            method: 'POST',
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('cartItems').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error updating cart item quantity:', error);
+        });
+    }
+
+    function removeFromCart(productId) {
+        var requestVerificationToken = document.getElementById('requestVerificationToken').value;
+
+        fetch(`/_Cart?handler=RemoveFromCart&productId=${productId}`, {
+            method: 'POST',
+            headers: {
+                'RequestVerificationToken': requestVerificationToken,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('cartItems').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error removing from cart:', error);
+        });
+    }
+</script>

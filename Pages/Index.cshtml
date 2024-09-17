@@ -1,10 +1,89 @@
 ﻿@page
-@model IndexModel
+@model BookStore.Pages.IndexModel
+@using BookStore.Pages.Shared
 @{
     ViewData["Title"] = "Home page";
+    string sortBy = Request.Query["sortBy"];
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Bookstore</h1>
+        <form method="get" id="searchForm">
+            <div class="row mb-3 flex flex-row">
+				 <p class="font-bold""">Sort by</p>
+                <div class="col-sm-2">
+                   
+                    <select class="form-select" name="sortBy" aria-label="Sort by" onchange="document.getElementById('searchForm').submit();">
+                        <!option value="1" @(sortBy == "2" ? "selected" : "")>
+            Name
+        </!option>
+                        <!option value="2"   @(sortBy == "2" ? "selected" : "")>Id</!option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="searchString" placeholder="Enter Product Name or ID" value="@Request.Query["searchString"]">
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" name="minPrice" placeholder="Min Price" value="@Request.Query["minPrice"]">
+                        <span class="input-group-text">to $</span>
+                        <input type="number" class="form-control" name="maxPrice" placeholder="Max Price" value="@Request.Query["maxPrice"]">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+        <div id="product-list" class="row">
+            @await Html.PartialAsync("_ProductList", Model.Products)
+        </div>
+        <div id="loading" class="text-center" style="display: none;">
+            <p>Loading more products...</p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var currentPage = 1;
+            var isLoading = false;
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+            function loadMoreProducts() {
+                if (isLoading) return;
+                isLoading = true;
+                $("#loading").show();
+                currentPage++;
+                $.ajax({
+                    url: "/Index?handler=LoadMoreProducts&currentPage=" + currentPage,
+                    type: "GET",
+                    success: function(data) {
+                        $("#product-list").append(data);
+                        isLoading = false;
+                        $("#loading").hide();
+                    },
+                    error: function() {
+                        isLoading = false;
+                        $("#loading").hide();
+                    }
+                });
+            }
+
+            $(window).scroll(function() {
+                if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                    loadMoreProducts();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

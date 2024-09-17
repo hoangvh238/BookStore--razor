@@ -7,22 +7,55 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Shared\_ProductList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Customer\" />
-    <Folder Include="Pages\Staff\" />
+    <UpToDateCheckInput Remove="Pages\Shared\_ProductList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Shared\_ProductList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Admin\Categories\Create.cshtml" />
+    <None Include="Pages\Admin\Categories\Delete.cshtml" />
+    <None Include="Pages\Admin\Categories\Details.cshtml" />
+    <None Include="Pages\Admin\Categories\Edit.cshtml" />
+    <None Include="Pages\Admin\Categories\Index.cshtml" />
+    <None Include="Pages\Admin\Products\Create.cshtml" />
+    <None Include="Pages\Admin\Products\Delete.cshtml" />
+    <None Include="Pages\Admin\Products\Details.cshtml" />
+    <None Include="Pages\Admin\Products\Edit.cshtml" />
+    <None Include="Pages\Admin\Products\Index.cshtml" />
+    <None Include="Pages\Admin\Suppliers\Create.cshtml" />
+    <None Include="Pages\Admin\Suppliers\Delete.cshtml" />
+    <None Include="Pages\Admin\Suppliers\Details.cshtml" />
+    <None Include="Pages\Admin\Suppliers\Edit.cshtml" />
+    <None Include="Pages\Admin\Suppliers\Index.cshtml" />
+    <None Include="Pages\_ProductList.cshtml" />
   </ItemGroup>
 
 </Project>
